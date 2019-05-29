@@ -11,42 +11,40 @@ abstract class Creator {
   }
 }
 
-class ConcreteCreator1 extends Creator {
+class CarCreator extends Creator {
   public factoryMethod(): Product {
-    return new ConcreteProduct1();
+    return new Car();
   }
 }
 
-class ConcreteProduct1 implements Product {
+class Car implements Product {
   public operation(): string {
-    return '{Result of the ConcreteProduct1}';
+    return '{Result of the Car}';
   }
 }
 
 
-class ConcreteCreator2 extends Creator {
+class BoatCreator extends Creator {
   public factoryMethod(): Product {
-    return new ConcreteProduct2();
+    return new Boat();
   }
 }
 
-class ConcreteProduct2 implements Product {
+class Boat implements Product {
   public operation(): string {
-    return '{Result of the ConcreteProduct2}';
+    return '{Result of the Boat}';
   }
 }
 
 
 function clientCode(creator: Creator) {
-  // ...
   console.log('Client: I\'m not aware of the creator\'s class, but it still works.');
   console.log(creator.someOperation());
-  // ...
 }
 
-console.log('App: Launched with the ConcreteCreator1.');
-clientCode(new ConcreteCreator1());
+console.log('App: Launched with the CarCreator.');
+clientCode(new CarCreator());
 console.log('');
 
-console.log('App: Launched with the ConcreteCreator2.');
-clientCode(new ConcreteCreator2());
+console.log('App: Launched with the BoatCreator.');
+clientCode(new BoatCreator());
