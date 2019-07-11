@@ -1,33 +1,33 @@
-import {ConcreteFactory1} from "./ConcreteFactory1";
-import {ConcreteFactory2} from "./ConcreteFactory2";
+import {VictorianFurnitureFactory} from "./VictorianFurnitureFactory";
+import {ModernFurnitureFactory} from "./ModernFurnitureFactory";
 
 export interface AbstractFactory {
-    createProductA(): AbstractProductA;
-    createProductB(): AbstractProductB;
+    createChair(): Chair;
+    createTable(): Table;
 }
 
-export interface AbstractProductA {
-    usefulFunctionA(): string;
+export interface Chair {
+    chairStyle(): string;
 }
 
-export interface AbstractProductB {
-    usefulFunctionB(): string;
-    anotherUsefulFunctionB(collaborator: AbstractProductA): string;
+export interface Table {
+    tableStyle(): string;
+    collaboratorWith(collaborator: Chair): string;
 }
 
 function clientCode(factory: AbstractFactory) {
-    const productA = factory.createProductA();
-    const productB = factory.createProductB();
+    const chair = factory.createChair();
+    const table = factory.createTable();
 
-    console.log(productA.usefulFunctionA());
-    console.log(productB.usefulFunctionB());
-    console.log(productB.anotherUsefulFunctionB(productA));
+    console.log(chair.chairStyle());
+    console.log(table.tableStyle());
+    console.log(table.collaboratorWith(chair));
 }
 
 console.log('Client: Testing client code with the first factory type...');
-clientCode(new ConcreteFactory1());
+clientCode(new VictorianFurnitureFactory());
 
 console.log('');
 
 console.log('Client: Testing the same client code with the second factory type...');
-clientCode(new ConcreteFactory2());
+clientCode(new ModernFurnitureFactory());

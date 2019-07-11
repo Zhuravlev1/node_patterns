@@ -1,12 +1,12 @@
 /** Separate the construction of a complex object from its representation
 * so that the same construction process can create different representations.*/
-interface IBuilder {
-    producePartA(): void;
-    producePartB(): void;
-    producePartC(): void;
+interface HouseBuilder {
+    produceHouse(): void;
+    produceSwimmingPool(): void;
+    produceGarden(): void;
 }
 
-class Builder implements IBuilder {
+class Builder implements HouseBuilder {
     private product: Product;
 
     constructor() {
@@ -17,16 +17,16 @@ class Builder implements IBuilder {
         this.product = new Product();
     }
 
-    public producePartA(): void {
-        this.product.parts.push('PartA1');
+    public produceHouse(): void {
+        this.product.parts.push('House');
     }
 
-    public producePartB(): void {
-        this.product.parts.push('PartB1');
+    public produceSwimmingPool(): void {
+        this.product.parts.push('Swimming pool');
     }
 
-    public producePartC(): void {
-        this.product.parts.push('PartC1');
+    public produceGarden(): void {
+        this.product.parts.push('Garden');
     }
 
     /**
@@ -34,9 +34,9 @@ class Builder implements IBuilder {
      * получения результатов.
      *
      * Обычной практикой является вызов метода сброса в конце тела
-     * метода getProduct. Однако такое поведение не является обязательным.
+     * метода getResult. Однако такое поведение не является обязательным.
      */
-    public getProduct(): Product {
+    public getResult(): Product {
         const result = this.product;
         this.reset();
         return result;
@@ -52,20 +52,20 @@ class Product {
 }
 
 class Director {
-    private builder: IBuilder;
+    private builder: HouseBuilder;
 
-    public setBuilder(builder: IBuilder): void {
+    public setBuilder(builder: HouseBuilder): void {
         this.builder = builder;
     }
 
     public buildMinimalViableProduct(): void {
-        this.builder.producePartA();
+        this.builder.produceHouse();
     }
 
     public buildFullFeaturedProduct(): void {
-        this.builder.producePartA();
-        this.builder.producePartB();
-        this.builder.producePartC();
+        this.builder.produceHouse();
+        this.builder.produceSwimmingPool();
+        this.builder.produceGarden();
     }
 }
 
@@ -75,17 +75,17 @@ function clientCode(director: Director) {
 
     console.log('Standard basic product:');
     director.buildMinimalViableProduct();
-    builder.getProduct().listParts();
+    builder.getResult().listParts();
 
     console.log('Standard full featured product:');
     director.buildFullFeaturedProduct();
-    builder.getProduct().listParts();
+    builder.getResult().listParts();
 
     // We can use pattern without Director
     console.log('Custom product:');
-    builder.producePartA();
-    builder.producePartC();
-    builder.getProduct().listParts();
+    builder.produceHouse();
+    builder.produceGarden();
+    builder.getResult().listParts();
 }
 
 const director = new Director();

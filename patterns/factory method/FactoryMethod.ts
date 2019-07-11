@@ -2,41 +2,41 @@
 * but let subclasses decide which class to instantiate.
 * Factory Method lets a class defer instantiation to subclasses.*/
 
-interface Product {
-  operation(): string;
+interface Transports {
+  deliver(): string;
 }
 
 abstract class Creator {
-  public abstract factoryMethod(): Product;
+  public abstract factoryMethod(): Transports;
 
   public someOperation(): string {
-    const product = this.factoryMethod();
-    return `Creator: The same creator's code has just worked with ${product.operation()}`;
+    const transport = this.factoryMethod();
+    return `Information about deliver: ${transport.deliver()}`;
   }
 }
 
 class CarCreator extends Creator {
-  public factoryMethod(): Product {
+  public factoryMethod(): Transports {
     return new Car();
   }
 }
 
-class Car implements Product {
-  public operation(): string {
-    return '{Result of the Car}';
+class Car implements Transports {
+  public deliver(): string {
+    return '{Product will be deliver by Car}';
   }
 }
 
 
 class BoatCreator extends Creator {
-  public factoryMethod(): Product {
+  public factoryMethod(): Transports {
     return new Boat();
   }
 }
 
-class Boat implements Product {
-  public operation(): string {
-    return '{Result of the Boat}';
+class Boat implements Transports {
+  public deliver(): string {
+    return '{Product will be deliver by Boat}';
   }
 }
 
